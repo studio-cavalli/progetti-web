@@ -11,8 +11,8 @@ description: >
   "edit homepage", "page content", "content width".
 ---
 
-# WordPress FSE — Operational Skill v3.9
-# Integrates Marsland Principles (Videos 1–3, June 2026)
+# WordPress FSE — Operational Skill v4.0
+# Integrates Marsland Principles (Videos 1–3, June 2026) + Session Changelog
 
 ---
 
@@ -133,18 +133,22 @@ CONTAINER_COUNT=$(echo "$CONTAINERS" | grep -c .)
 CONTAINER=<chosen or single value>
 THEME_SLUG=$(docker exec "$CONTAINER" wp --allow-root theme list \
   --status=active --field=name 2>/dev/null | head -1)
+SITE_URL=$(docker exec "$CONTAINER" wp --allow-root option get siteurl 2>/dev/null)
 [ -z "$THEME_SLUG" ] && echo "ERROR: cannot detect active child theme — check WP-CLI or specify the slug manually" && exit 1
-echo "Container: $CONTAINER | Theme: $THEME_SLUG"
+echo "Container: $CONTAINER | Theme: $THEME_SLUG | Site: $SITE_URL"
 ```
 
-**A2b — Shared hosting path** *(only if ENV_TYPE=shared)*:
-Ask explicitly: "What is the slug (folder name) of your active child theme?"
-Assign the answer to `THEME_SLUG`. Docker and WP-CLI are not available — in Phase 1
-of §HYBRID RECON use manual WP Dashboard instructions instead of bash commands.
+**A2b — Shared hosting / REST API path** *(only if ENV_TYPE=shared)*:
+
+- If the user provided a WordPress REST API endpoint or application password:
+  ```
+  SITE_URL = base URL of the REST API endpoint (e.g. https://example.com)
+  THEME_SLUG = fetch from: GET /wp-json/wp/v2/themes?status=active
+  ```
+- Otherwise ask explicitly: "What is the slug (folder name) of your active child theme?"
 
 **A3 — INIT / RESUME decision:**
 
-Run:
 ```bash
 ls "$PROJECTS_DIR/$THEME_SLUG.md" 2>/dev/null && echo "RESUME" || echo "INIT"
 ```
@@ -268,14 +272,40 @@ After collecting all data, write `$PROJECTS_DIR/$THEME_SLUG.md` using this templ
 - completed_files: []
 - session_notes: ""
 - last_updated: GENERATION_DATE
+
+## §12.6 Changelog
+<!-- Auto-maintained by skill. One row per file written or modified. -->
+| Date | Session | File modified | Description |
+|------|---------|---------------|-------------|
 ```
 
 ### §RESUME — Next session
 
 1. Read `$PROJECTS_DIR/$THEME_SLUG.md` → show §12.5 summary
-2. Check `marsland_verified`: if `false`, run Morange Test before proceeding
-3. Ask: "Continue from step `current_step` / do you have a specific task / check responsive?"
-4. Propose detailed work plan → user approval → execution
+2. Show last 5 rows of **§12.6 Changelog** so the user knows exactly what was changed last
+3. Check `marsland_verified`: if `false`, run Morange Test before proceeding
+4. Ask: "Continue from step `current_step` / do you have a specific task / check responsive?"
+5. Propose detailed work plan → user approval → execution
+
+### §CHANGELOG — How to maintain it
+
+**After every file written or modified**, append a row to §12.6:
+
+```
+| YYYY-MM-DD | N | path/to/file.ext | Brief description of what changed |
+```
+
+Where N = session number (increment at each new conversation).
+
+**At session end**, update §12.5:
+- `last_updated` → today's date
+- `session_notes` → one-line summary of the session
+- `last_completed_step` → last step fully completed
+
+**Site auto-detection priority:**
+1. `SITE_URL` from WP-CLI (`option get siteurl`) — Docker environments
+2. Base URL from REST API endpoint — if user provided credentials
+3. Manual input — fallback only if both above fail
 
 ---
 
@@ -330,6 +360,7 @@ After collecting all data, write `$PROJECTS_DIR/$THEME_SLUG.md` using this templ
 - One H1 per template/page, hierarchy H1→H2→H3
 - `rel="noopener noreferrer"` on links with `target="_blank"`
 - `scroll-margin-top` on elements with ID when header is fixed
+- **Append a changelog row after every file written or modified** (see §CHANGELOG)
 
 ---
 
@@ -372,6 +403,7 @@ After collecting all data, write `$PROJECTS_DIR/$THEME_SLUG.md` using this templ
    docker exec "$CONTAINER" wp --allow-root post list --post_type=wp_template --format=table
    ```
 6. Error → restore: `cp file.html.bak file.html`
+7. **Append changelog row** (see §CHANGELOG)
 
 ### Template Cache (after every .html written)
 

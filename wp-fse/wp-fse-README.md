@@ -4,7 +4,7 @@
 > **English** (below) and **Italian** (further down, starting at *Documentazione in italiano*).
 >
 > **Author / Autore:** Marco Antonio Cavalli  
-> **Version / Versione:** v3.9 — derived from `SKILL.md` v3.9 (June 2026)
+> **Version / Versione:** v4.0 — derived from `SKILL.md` v4.0 (June 2026)
 
 ---
 
@@ -22,6 +22,7 @@ When activated, this skill gives Claude a strict, opinionated workflow for FSE d
 - **Blocks reference** — quick lookup table mapping section types to correct native Gutenberg blocks.
 - **Four content widths** — normal, wide, full, custom (based on Marsland's video series).
 - **Responsive checklist** — mandatory verification at 375px · 768px · 1024px · 1440px.
+- **Session changelog** — every file written or modified is logged automatically in the project file, so resuming work always starts from a clear picture of what changed.
 
 ### Who it's for
 
@@ -54,10 +55,13 @@ Templates hold structure (header, content area, footer). Pages hold editorial co
 
 #### The Morange Test
 At the start of every session on an existing site, the skill runs a quick check: click "Edit page" in the WP admin bar. If you land in the template editor instead of the page editor, you have the Morange problem and must fix it before proceeding.
-> 🙏 🙏 Thank you Jamie — your videos pushed me to embrace WordPress Gutenberg and FSE
 
-#### Project files
-The skill maintains a per-project `.md` file tracking theme slug, design system values, CPTs, page/template mapping, and build progress. This allows resuming work across sessions without losing context.
+> 🙏🙏 Thank you Jamie — your videos pushed me to embrace WordPress Gutenberg and FSE at a moment of crisis.
+
+#### Project files and session changelog
+The skill maintains a per-project `.md` file tracking theme slug, design system values, CPTs, page/template mapping, build progress, and a **session changelog** (§12.6). Every file written or modified during a session is logged with date, session number, file path, and a short description. When resuming work, the skill reads the last 5 changelog entries so the context is immediately clear — no need to remember what was done in a previous session.
+
+Site name is detected automatically via WP-CLI (`siteurl` option) in Docker environments, or from the REST API base URL when working with application passwords. Manual input is only a fallback.
 
 ### Stack assumptions
 
@@ -67,7 +71,8 @@ The skill maintains a per-project `.md` file tracking theme slug, design system 
 - WP-CLI available (Docker) or WP Dashboard fallback (shared hosting)
 - WP File Manager plugin for file editing >50 lines
 - Fonts in `.woff2` format for maximum loading performance — use [Jakson](https://www.jakson.co) to convert and optimize font files before uploading
-> 🙏 🙏 Thank you Jakson — your hair is carved in rock just as much as your expertise. Great videos
+
+> 🙏🙏 Thank you Jakson — your hair is carved in rock just as much as your expertise. Great videos.
 
 ### Contributing
 
@@ -89,7 +94,7 @@ MIT
 
 Una skill per Claude che fornisce una guida operativa completa per costruire e manutenere siti WordPress con **Full Site Editing (FSE)** e blocchi Gutenberg nativi.
 
-Deriva direttamente da `SKILL.md` v3.9, sviluppata da **Marco Antonio Cavalli** come strumento di lavoro per progetti WordPress FSE reali, con l'integrazione dei principi di Jamie Marsland (video series, giugno 2026).
+Deriva direttamente da `SKILL.md` v4.0, sviluppata da **Marco Antonio Cavalli** come strumento di lavoro per progetti WordPress FSE reali, con l'integrazione dei principi di Jamie Marsland (video series, giugno 2026).
 
 ### Cosa fa
 
@@ -103,6 +108,7 @@ Quando attivata, la skill fornisce a Claude un flusso di lavoro rigoroso per lo 
 - **Tabella blocchi di riferimento** — lookup rapido: tipo di sezione → blocchi Gutenberg nativi corretti.
 - **Le quattro larghezze** — normale, wide, full, custom (basate sulla serie video di Marsland).
 - **Checklist responsive** — verifica obbligatoria a 375px · 768px · 1024px · 1440px.
+- **Changelog di sessione** — ogni file scritto o modificato viene registrato automaticamente nel file di progetto, così riprendere il lavoro parte sempre da un quadro chiaro di cosa è cambiato.
 
 ### A chi serve
 
@@ -135,10 +141,13 @@ I template contengono la struttura (header, area contenuto, footer). Le pagine c
 
 #### Il Test Morange
 All'inizio di ogni sessione su un sito esistente, la skill esegue un controllo rapido: clicca "Modifica pagina" nella admin bar di WP. Se arrivi all'editor del template invece che all'editor della pagina, hai il problema Morange e devi risolverlo prima di procedere.
-> 🙏 🙏 Grazie Jamie - I tuoi video mi hanno spinto ad avvicinarmi a Wordpress Gutenberg e FSE
 
-#### I file di progetto
-La skill mantiene un file `.md` per progetto che traccia lo slug del theme, i valori del design system, i CPT, la mappatura pagine/template e lo stato di avanzamento. Questo permette di riprendere il lavoro tra sessioni diverse senza perdere il contesto.
+> 🙏🙏 Grazie Jamie — i tuoi video mi hanno spinto ad avvicinarmi a WordPress Gutenberg e FSE in un momento di crisi.
+
+#### I file di progetto e il changelog di sessione
+La skill mantiene un file `.md` per progetto che traccia lo slug del theme, i valori del design system, i CPT, la mappatura pagine/template, lo stato di avanzamento e un **changelog di sessione** (§12.6). Ogni file scritto o modificato viene registrato con data, numero di sessione, percorso del file e una breve descrizione. Quando si riprende il lavoro, la skill legge le ultime 5 voci del changelog così il contesto è immediatamente chiaro — senza dover ricordare cosa è stato fatto nella sessione precedente.
+
+Il nome del sito viene rilevato automaticamente via WP-CLI (opzione `siteurl`) negli ambienti Docker, o dall'URL base delle REST API quando si lavora con application password. L'inserimento manuale è solo un fallback.
 
 ### Stack di riferimento
 
@@ -148,7 +157,8 @@ La skill mantiene un file `.md` per progetto che traccia lo slug del theme, i va
 - WP-CLI disponibile (Docker) o fallback su WP Dashboard (hosting condiviso)
 - Plugin WP File Manager per modifica file >50 righe
 - Font in formato `.woff2` per massima velocità di caricamento e alleggerimento del sito — usare [Jakson](https://www.jakson.co) per convertire e ottimizzare i file font prima dell'upload
-> 🙏 Grazie Jakson - i tuoi capelli sono scolpiti nella roccia tanto quanto la tua competenza
+
+> 🙏 Grazie Jakson — i tuoi capelli sono scolpiti nella roccia tanto quanto la tua competenza.
 
 ### Contribuire
 
